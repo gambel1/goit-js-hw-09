@@ -1,79 +1,79 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
-class Timer {
-  constructor({ selector, targetDate }) {
-    this.intervalId = null;
-    this.selector = selector;
-    this.targetDate = targetDate;
-    this.start();
+const buttonStartEl = document.querySelector('button[data - start]');
+// const boxEl = document.querySelector('.timer');
+const daysEl = document.querySelector('span[data - days]');
+const hoursEl = document.querySelector('span[data - hours]');
+const minutesEl = document.querySelector('span[data - minutes]');
+const secondsEl = document.querySelector('span[data - seconds]');
 
-    this.refs = {
-      inputPickerEl: document.querySelector(
-        `${this.selector} #datetime-picker`
-      ),
-      buttonEl: document.querySelector(`${this.selector} button[data-start]`),
-      // const boxEl = document.querySelector('.timer');
-      days: document.querySelector(`${this.selector} span[data-days]`),
-      hours: document.querySelector(`${this.selector} span[data-hours]`),
-      mins: document.querySelector(`${this.selector} span[data-minutes]`),
-      secs: document.querySelector(`${this.selector} span[data-seconds]`),
-    };
-  }
+buttonStartEl.addEventListener('click', onTimerStart);
 
-  calcHandleTime() {
-    const dateNow = Date.now();
-    const deltaTime = this.targetDate - dateNow;
+buttonStartEl.disabled = true;
 
-    this.timerReview(deltaTime);
-    this.getTimeComponents(deltaTime);
-  }
+const timerId = null;
 
-  timerReview(time) {
-    if (time < 0) {
-      document.querySelector(`${this.selector}`).innerHTML =
-        'Please choose a date in the future';
+const options = {
+  enableTime: true,
+  time_24hr: true,
+  defaultDate: new Date(),
+  minuteIncrement: 1,
+  onClose(selectedDates) {
+    const currentTime = new Date();
 
-      clearInterval(this.intervalId);
+    if (selectedDates[0] - currentTime > 0) {
+      buttonStartEl.disabled = false;
+    } else {
+      buttonStartEl.disabled = true;
+      alert('Please choose a date in the future', 1000);
     }
-  }
+  },
+};
 
-  getTimeComponents(time) {
-    // Number of milliseconds per unit of time
-    const second = 1000;
-    const minute = second * 60;
-    const hour = minute * 60;
-    const day = hour * 24;
+function convertMs(ms) {
+  // Number of milliseconds per unit of time
+  const second = 1000;
+  const minute = second * 60;
+  const hour = minute * 60;
+  const day = hour * 24;
 
-    const days = pad(Math.floor(ms / day));
-    const hours = pad(Math.floor((ms % day) / hour));
-    const minutes = pad(Math.floor(((ms % day) % hour) / minute));
-    const seconds = pad(Math.floor((((ms % day) % hour) % minute) / second));
+  const days = Math.floor(ms / day);
+  const hours = Math.floor((ms % day) / hour);
+  const minutes = Math.floor(((ms % day) % hour) / minute);
+  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
-    return { days, hours, minutes, seconds };
-  }
-
-  updateClockFace(days, hours, mins, secs) {
-    this.refs.days.textContent = days;
-    this.refs.hours.textContent = hours;
-    this.refs.mins.textContent = mins;
-    this.refs.secs.textContent = secs;
-  }
-
-  pad(value) {
-    return String(value).padStart(2, '0');
-  }
-
-  start() {
-    this.intervalId = setInterval(() => {
-      this.calcHandleTime();
-    }, 1000);
-  }
+  return { days, hours, minutes, seconds };
 }
 
-buttonEl.addEventListener('click', () => {
-  timer.start();
-});
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0');
+}
+
+function onTimerStart() {
+  const selectedDate = InputPickrEl.selectedDates[0];
+}
+
+timerId = setInterval(() => {
+  const startTime = new Date();
+  const deltaTime = selectedDate - startTime;
+  buttonStartEl.disabled = true;
+
+  if (deltaTime < 0) {
+    clearInterval(timerId);
+    return;
+  }
+  updateClockFace(convertMs(deltaTime));
+}, 1000);
+
+function updateClockFace({ days, hours, minutes, seconds }) {
+  daysEl.textContent = addLeadingZero(days);
+  hoursEl.textContent = addLeadingZero(hours);
+  minutesEl.textContent = addLeadingZero(minutes);
+  secondsEl.textContent = addLeadingZero(seconds);
+}
+
+const InputPickrEl = flatpickr('#datetime-picker', options);
 
 // const options = {
 //   enableTime: true,
