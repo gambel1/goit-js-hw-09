@@ -12,7 +12,7 @@ buttonStartEl.addEventListener('click', onTimerStart);
 
 buttonStartEl.disabled = true;
 
-const timerId = null;
+let timerId = null;
 
 const options = {
   enableTime: true,
