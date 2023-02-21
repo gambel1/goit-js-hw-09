@@ -1,12 +1,12 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
-const buttonStartEl = document.querySelector('button[data - start]');
+const buttonStartEl = document.querySelector('button[data-start]');
 // const boxEl = document.querySelector('.timer');
-const daysEl = document.querySelector('span[data - days]');
-const hoursEl = document.querySelector('span[data - hours]');
-const minutesEl = document.querySelector('span[data - minutes]');
-const secondsEl = document.querySelector('span[data - seconds]');
+const daysEl = document.querySelector('span[data-days]');
+const hoursEl = document.querySelector('span[data-hours]');
+const minutesEl = document.querySelector('span[data-minutes]');
+const secondsEl = document.querySelector('span[data-seconds]');
 
 buttonStartEl.addEventListener('click', onTimerStart);
 
