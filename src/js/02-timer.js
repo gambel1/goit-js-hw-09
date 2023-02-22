@@ -52,19 +52,20 @@ function addLeadingZero(value) {
 
 function onTimerStart() {
   const selectedDate = InputPickrEl.selectedDates[0];
+
+
+  timerId = setInterval(() => {
+    const startTime = new Date();
+    const deltaTime = selectedDate - startTime;
+    buttonStartEl.disabled = true;
+
+    if (deltaTime < 0) {
+      clearInterval(timerId);
+      return;
+    }
+    updateClockFace(convertMs(deltaTime));
+  }, 1000);
 }
-
-timerId = setInterval(() => {
-  const startTime = new Date();
-  const deltaTime = selectedDate - startTime;
-  buttonStartEl.disabled = true;
-
-  if (deltaTime < 0) {
-    clearInterval(timerId);
-    return;
-  }
-  updateClockFace(convertMs(deltaTime));
-}, 1000);
 
 function updateClockFace({ days, hours, minutes, seconds }) {
   daysEl.textContent = addLeadingZero(days);
