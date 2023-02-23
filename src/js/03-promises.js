@@ -31,8 +31,8 @@ function createHandlePromise(event) {
   for (let i = 0; i < amount; i += 1) {
     delay += step;
     createPromise(i, delay).then(onSuccess).catch(onError);
-    form.reset();
   }
+  form.reset();
 }
 
 function onSuccess({ position, delay }) {

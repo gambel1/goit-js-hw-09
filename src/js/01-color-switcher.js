@@ -9,9 +9,9 @@ const buttonStop = document.querySelector('[data-stop]');
 buttonStart.addEventListener('click', buttonHandleStart);
 buttonStop.addEventListener('click', buttonHandleStop);
 
-const randomIntegerFromInterval = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
+// const randomIntegerFromInterval = (min, max) => {
+//   return Math.floor(Math.random() * (max - min + 1) + min);
+// };
 
 function changeBackground(color) {
   bodyColorEl.style.backgroundColor = color;
@@ -20,7 +20,7 @@ function changeBackground(color) {
 let intervalColorChange = undefined;
 function buttonHandleStart() {
   intervalColorChange = setInterval(() => {
-    randomIntegerFromInterval(0, 5);
+    
     changeBackground(getRandomHexColor());
   }, 1000);
   buttonStop.removeAttribute('disabled');
