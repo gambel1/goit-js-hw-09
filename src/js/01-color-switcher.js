@@ -19,8 +19,8 @@ function changeBackground(color) {
 
 let intervalColorChange = undefined;
 function buttonHandleStart() {
-  intervalColorChange = setInterval(randomNumber => {
-    randomNumber = randomIntegerFromInterval(0, 5);
+  intervalColorChange = setInterval(() => {
+    randomIntegerFromInterval(0, 5);
     changeBackground(getRandomHexColor());
   }, 1000);
   buttonStop.removeAttribute('disabled');
